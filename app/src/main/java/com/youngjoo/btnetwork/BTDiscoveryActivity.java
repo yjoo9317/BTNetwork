@@ -41,8 +41,8 @@ public class BTDiscoveryActivity extends AppCompatActivity {
         setContentView(R.layout.activity_btdiscovery);
         mReceiver = new BluetoothStateReceiver();
 
-        mToolbar = (Toolbar) findViewById(R.id.my_toolbar);
-        setSupportActionBar(mToolbar);
+        //mToolbar = (Toolbar) findViewById(R.id.my_toolbar);
+        //setSupportActionBar(mToolbar);
 
         mScanButton = (Button) findViewById(R.id.scanButton);
         mBluetoothStateTextView = (TextView) findViewById(R.id.bluetooth_state_text_view);
@@ -54,6 +54,7 @@ public class BTDiscoveryActivity extends AppCompatActivity {
 
         if(mBluetoothAdapter == null){
             Log.i(TAG, "Device does not support bluetooth connectivity.");
+            mBluetoothStateTextView.setText(R.string.BT_not_support);
             return;
         }
 

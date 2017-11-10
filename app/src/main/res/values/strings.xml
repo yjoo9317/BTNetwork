@@ -1,6 +1,8 @@
 <resources>
     <string name="app_name">BTNetwork</string>
+    <string name="BT_scan_devices">Scan Bluetooth Devices</string>
     <string name="BT_discovering">Now discovering BT devices..</string>
     <string name="BT_enabled">BT is enabled.</string>
     <string name="BT_disabled">BT is disabled.</string>
+    <string name="BT_not_support">Device does not support BT connectivity.</string>
 </resources>
