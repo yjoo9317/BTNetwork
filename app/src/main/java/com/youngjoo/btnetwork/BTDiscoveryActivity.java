@@ -1,11 +1,13 @@
 package com.youngjoo.btnetwork;
 
+import android.Manifest;
 import android.bluetooth.BluetoothAdapter;
 import android.bluetooth.BluetoothDevice;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
+import android.support.v4.app.ActivityCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
@@ -71,6 +73,11 @@ public class BTDiscoveryActivity extends AppCompatActivity {
             startActivityForResult(intent, REQUEST_BT_ENABLE );
         }
 
+        int permission = 1;
+        ActivityCompat.requestPermissions(this,
+                new String[]{Manifest.permission.ACCESS_COARSE_LOCATION},
+                permission);
+
         mScanButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -80,6 +87,7 @@ public class BTDiscoveryActivity extends AppCompatActivity {
                 mBTArrayAdapter.clear();
                 mProgressMenuItem.setVisible(true);
                 mBluetoothAdapter.startDiscovery();
+                Log.i(TAG, "BT discovery started..");
             }
         });
 
@@ -112,10 +120,14 @@ public class BTDiscoveryActivity extends AppCompatActivity {
     private class BluetoothStateReceiver extends BroadcastReceiver {
         @Override
         public void onReceive(Context context, Intent intent){
+            Log.i(TAG, "BT event received..");
             String action = intent.getAction();
             if(action.equals(BluetoothDevice.ACTION_FOUND)){
                 BluetoothDevice device = intent.getParcelableExtra(BluetoothDevice.EXTRA_DEVICE);
-                mBTArrayAdapter.add(device.getName()+"\n"+device.getAddress());
+                String name = device.getName();
+                String address = device.getAddress();
+                Log.i(TAG, "Found: "+name+" at "+address);
+                mBTArrayAdapter.add(name+"\n"+address);
                 Log.i(TAG, "Found : "+device.getName()+" at "+device.getAddress());
                 mBTArrayAdapter.notifyDataSetChanged();
             } else if(action.equals(BluetoothAdapter.ACTION_DISCOVERY_FINISHED)){
